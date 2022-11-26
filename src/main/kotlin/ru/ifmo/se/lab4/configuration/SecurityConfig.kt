@@ -90,7 +90,7 @@ class SecurityConfig(
             .csrf().disable()
             .authorizeRequests().antMatchers("/api/**").authenticated()
             .and()
-            .oauth2ResourceServer { obj: OAuth2ResourceServerConfigurer<HttpSecurity?> -> obj.jwt() }
+            .oauth2ResourceServer {it.jwt()}
             .addFilterAfter(
                 TokenTypeFilter(TokenTypeFilter.TokenType.ACCESS),
                 BearerTokenAuthenticationFilter::class.java

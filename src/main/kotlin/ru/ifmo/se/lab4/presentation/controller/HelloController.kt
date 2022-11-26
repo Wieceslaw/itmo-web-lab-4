@@ -4,10 +4,11 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
-@Controller
-@RequestMapping("/auth")
+@RestController
+@RequestMapping("/api")
 class HelloController {
-    @GetMapping("/api/hello")
+    @GetMapping("/hello")
     fun hello(authentication: Authentication): String = "Hello ${authentication.name}!"
 }

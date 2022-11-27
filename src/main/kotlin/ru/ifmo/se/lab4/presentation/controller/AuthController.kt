@@ -1,6 +1,5 @@
 package ru.ifmo.se.lab4.presentation.controller
 
-import lombok.AllArgsConstructor
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -19,10 +18,10 @@ import ru.ifmo.se.lab4.domain.service.TokenService
 import ru.ifmo.se.lab4.domain.service.UserService
 import ru.ifmo.se.lab4.presentation.mapper.toResponseScheme
 import ru.ifmo.se.lab4.presentation.mapper.toUser
-import ru.ifmo.se.lab4.presentation.scheme.RefreshTokenRequestScheme
-import ru.ifmo.se.lab4.presentation.scheme.RegistrationRequestScheme
-import ru.ifmo.se.lab4.presentation.scheme.TokensResponseScheme
-import ru.ifmo.se.lab4.presentation.scheme.UserResponseScheme
+import ru.ifmo.se.lab4.presentation.scheme.auth.RefreshTokenRequestScheme
+import ru.ifmo.se.lab4.presentation.scheme.auth.RegistrationRequestScheme
+import ru.ifmo.se.lab4.presentation.scheme.auth.TokensResponseScheme
+import ru.ifmo.se.lab4.presentation.scheme.auth.UserResponseScheme
 
 
 @RestController

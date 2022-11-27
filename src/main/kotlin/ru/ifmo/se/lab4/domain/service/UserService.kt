@@ -22,10 +22,13 @@ class UserService(
         return UserPrincipal(user)
     }
 
-    fun createUser(user: User) {
+    fun createUser(user: User): User {
         if (userRepository.findUserByUsername(user.username) != null)
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already in use")
         user.password = passwordEncoder.encode(user.password)
-        userRepository.save(user)
+        return userRepository.saveUser(user)
     }
+
+    fun getUserByUsername(username: String): User =
+        userRepository.findUserByUsername(username) ?: throw UsernameNotFoundException(username)
 }

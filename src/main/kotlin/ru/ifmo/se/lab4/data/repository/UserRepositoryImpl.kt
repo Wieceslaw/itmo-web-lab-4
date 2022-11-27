@@ -1,11 +1,10 @@
 package ru.ifmo.se.lab4.data.repository
 
 import org.springframework.stereotype.Component
-import ru.ifmo.se.lab4.data.entity.TokenEntity
+import org.springframework.transaction.annotation.Transactional
 import ru.ifmo.se.lab4.data.mapper.toUser
 import ru.ifmo.se.lab4.data.mapper.toUserEntity
 import ru.ifmo.se.lab4.data.repository.jpa.UserJpaRepository
-import ru.ifmo.se.lab4.domain.model.Token
 import ru.ifmo.se.lab4.domain.model.User
 import ru.ifmo.se.lab4.domain.repository.UserRepository
 
@@ -15,8 +14,31 @@ class UserRepositoryImpl(
     private val userJpaRepository: UserJpaRepository
 ): UserRepository
 {
-    override fun findUserByUsername(username: String): User? =
-        userJpaRepository.findUserEntityByUsername(username)?.toUser()
+    override fun saveUser(user: User): User =
+        user.also { userJpaRepository.save(it.toUserEntity()) }
 
-    override fun save(user: User) { userJpaRepository.save(user.toUserEntity()) }
+    override fun findUserById(id: Long): User? =
+        userJpaRepository.findById(id).let { if (it.isPresent) it.get().toUser() else null }
+
+    override fun findUserByUsername(username: String): User? =
+        userJpaRepository.findByUsername(username)?.toUser()
+
+    override fun deleteUser(user: User) {
+        userJpaRepository.deleteByUsername(user.username)
+    }
+
+    override fun deleteUserById(id: Long) {
+        userJpaRepository.deleteById(id)
+    }
+
+    @Transactional
+    override fun updateUserByUsername(user: User, username: String): User? {
+        val userEntity = userJpaRepository.findByUsername(username)
+        return userEntity?.let {
+            it.username = user.username
+            it.password = user.password
+            userJpaRepository.save(it)
+            it.toUser()
+        }
+    }
 }

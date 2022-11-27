@@ -6,13 +6,17 @@ import javax.persistence.*
 @Table(name = "users")
 class UserEntity(
     @Column(name = "username", nullable = false, unique = true)
-    val username: String,
+    var username: String,
 
     @Column(name = "password", nullable = false)
-    val password: String,
-
+    var password: String,
+)
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     val id: Long? = null
-)
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    val points: List<PointEntity> = listOf()
+}

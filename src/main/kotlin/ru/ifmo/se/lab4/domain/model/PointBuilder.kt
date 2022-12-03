@@ -2,12 +2,12 @@ package ru.ifmo.se.lab4.domain.model
 
 import java.time.LocalDateTime
 
-data class PointBuilder(
+class PointBuilder(
     var user: User,
     var result: Boolean,
     var startDelay: Long,
     var datetime: LocalDateTime,
-    var x: Double,
-    var y: Double,
-    var r: Double,
-)
+    x: Double,
+    y: Double,
+    r: Double,
+): Point(x, y, r)

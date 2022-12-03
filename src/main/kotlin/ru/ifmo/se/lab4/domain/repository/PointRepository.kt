@@ -1,13 +1,13 @@
 package ru.ifmo.se.lab4.domain.repository
 
-import ru.ifmo.se.lab4.domain.model.Point
+import ru.ifmo.se.lab4.domain.model.PointResult
 import ru.ifmo.se.lab4.domain.model.PointBuilder
 import ru.ifmo.se.lab4.domain.model.User
 
 interface PointRepository {
-    fun savePoint(pointBuilder: PointBuilder): Point?
-    fun findPointById(id: Long): Point?
-    fun findAllPointsByUser(user: User): List<Point>
+    fun savePoint(pointBuilder: PointBuilder): PointResult?
+    fun findPointById(id: Long): PointResult?
+    fun findAllPointsByUser(user: User): List<PointResult>
     fun deletePointById(id: Long)
     fun deleteAllPointsByUser(user: User)
 }

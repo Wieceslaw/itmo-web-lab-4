@@ -3,11 +3,11 @@ package ru.ifmo.se.lab4.data.repository
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import ru.ifmo.se.lab4.data.mapper.toPoint
+import ru.ifmo.se.lab4.data.mapper.toPointResult
 import ru.ifmo.se.lab4.data.mapper.toPointEntity
 import ru.ifmo.se.lab4.data.repository.jpa.PointJpaRepository
 import ru.ifmo.se.lab4.data.repository.jpa.UserJpaRepository
-import ru.ifmo.se.lab4.domain.model.Point
+import ru.ifmo.se.lab4.domain.model.PointResult
 import ru.ifmo.se.lab4.domain.model.PointBuilder
 import ru.ifmo.se.lab4.domain.model.User
 import ru.ifmo.se.lab4.domain.repository.PointRepository
@@ -19,18 +19,18 @@ class PointRepositoryImpl(
 ): PointRepository
 {
     @Transactional
-    override fun savePoint(pointBuilder: PointBuilder): Point? =
+    override fun savePoint(pointBuilder: PointBuilder): PointResult? =
         pointBuilder.toPointEntity(userJpaRepository)?.let {
             pointJpaRepository.save(it)
-            it.toPoint()
+            it.toPointResult()
         }
 
-    override fun findPointById(id: Long): Point? =
-        pointJpaRepository.findById(id).let { if (it.isPresent) it.get().toPoint() else null }
+    override fun findPointById(id: Long): PointResult? =
+        pointJpaRepository.findById(id).let { if (it.isPresent) it.get().toPointResult() else null }
 
-    override fun findAllPointsByUser(user: User): List<Point> {
+    override fun findAllPointsByUser(user: User): List<PointResult> {
         val userEntity = userJpaRepository.findByUsername(user.username) ?: throw UsernameNotFoundException(user.username)
-        return userEntity.points.map { it.toPoint()!! }
+        return userEntity.points.map { it.toPointResult()!! }
     }
 
     @Transactional

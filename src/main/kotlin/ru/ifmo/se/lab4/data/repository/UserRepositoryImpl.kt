@@ -32,10 +32,9 @@ class UserRepositoryImpl(
     }
 
     @Transactional
-    override fun updateUserByUsername(user: User, username: String): User? {
-        val userEntity = userJpaRepository.findByUsername(username)
+    override fun updateUser(user: User): User? {
+        val userEntity = userJpaRepository.findByUsername(user.username)
         return userEntity?.let {
-            it.username = user.username
             it.password = user.password
             userJpaRepository.save(it)
             it.toUser()

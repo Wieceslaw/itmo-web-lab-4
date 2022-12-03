@@ -25,5 +25,4 @@ jwt:
   public.key: classpath:app.pub
 
 token:
-  access.expiration: 86400 # 24 hours
-  refresh.expiration: 7776000 # 90 days
+  bearer.expiration: 86400 # 24 hours

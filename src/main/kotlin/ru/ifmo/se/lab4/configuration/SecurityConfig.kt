@@ -10,26 +10,21 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
-import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider
-import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint
-import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter
-import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler
 import org.springframework.security.web.SecurityFilterChain
-import ru.ifmo.se.lab4.domain.service.UserService
-import ru.ifmo.se.lab4.security.filter.TokenTypeFilter
+import ru.ifmo.se.lab4.security.CustomUserDetailsService
+import ru.ifmo.se.lab4.security.JwtAuthenticationDsl
+import ru.ifmo.se.lab4.security.CustomAuthenticationEntryPoint
+import ru.ifmo.se.lab4.security.JwtAuthenticationProvider
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 
@@ -37,9 +32,9 @@ import java.security.interfaces.RSAPublicKey
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    @Value("\${jwt.public.key}") private val key: RSAPublicKey,
-    @Value("\${jwt.private.key}") private val priv: RSAPrivateKey,
-    private val userDetailsService: UserService,
+    @Value("\${jwt.public.key}") private val rsaPublicKey: RSAPublicKey,
+    @Value("\${jwt.private.key}") private val rsaPrivateKey: RSAPrivateKey,
+    private val userDetailsService: CustomUserDetailsService,
     private val passwordEncoder: PasswordEncoder
 )
 {
@@ -49,63 +44,60 @@ class SecurityConfig(
         http
             .antMatcher("/auth/register")
             .csrf().disable()
-            .authorizeRequests().anyRequest().permitAll()
-            .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+
+            .authorizeRequests().anyRequest().permitAll()
         return http.build()
     }
 
     @Bean
     @Order(2)
-    fun loginFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun loginFilterChain(http: HttpSecurity,
+                         customAuthenticationEntryPoint: CustomAuthenticationEntryPoint,
+                         ): SecurityFilterChain {
         http
             .antMatcher("/auth/login")
             .csrf().disable()
-            .httpBasic(Customizer.withDefaults())
-            .authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+
+            .httpBasic().authenticationEntryPoint(customAuthenticationEntryPoint)
+            .and()
+            .authorizeRequests().anyRequest().authenticated()
         return http.build()
     }
 
     @Bean
     @Order(3)
-    fun refreshAndLogoutFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun apiFilterChain(http: HttpSecurity,
+                       jwtAuthDsl: JwtAuthenticationDsl,
+                       jwtAuthenticationProvider: JwtAuthenticationProvider,
+                       customAuthenticationEntryPoint: CustomAuthenticationEntryPoint,
+                       ): SecurityFilterChain {
         http
-            .requestMatchers()
-            .antMatchers("/auth/refresh", "/auth/logout")
-            .and()
+            .antMatcher("/api/**")
             .csrf().disable()
-            .authorizeRequests().anyRequest().permitAll()
-            .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+
+            .apply(jwtAuthDsl)
+            .and()
+            .authenticationProvider(jwtAuthenticationProvider)
+            .authorizeRequests().anyRequest().authenticated()
+
+            .and()
+            .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
         return http.build()
     }
 
     @Bean
-    @Order(4)
-    fun apiFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http
-            .csrf().disable()
-            .authorizeRequests().antMatchers("/api/**").authenticated()
-            .and()
-            .oauth2ResourceServer {it.jwt()}
-            .addFilterAfter(
-                TokenTypeFilter(TokenTypeFilter.TokenType.ACCESS),
-                BearerTokenAuthenticationFilter::class.java
-            )
-            .exceptionHandling { exceptions: ExceptionHandlingConfigurer<HttpSecurity?> ->
-                exceptions
-                    .authenticationEntryPoint(BearerTokenAuthenticationEntryPoint())
-                    .accessDeniedHandler(BearerTokenAccessDeniedHandler())
-            }
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        return http.build()
+    fun jwtAuthenticationEntryPoint(): CustomAuthenticationEntryPoint {
+        return CustomAuthenticationEntryPoint()
     }
 
     @Bean
-    fun daoAuthenticationProvider(): AuthenticationProvider {
+    fun daoAuthenticationProvider(): DaoAuthenticationProvider {
         val provider = DaoAuthenticationProvider()
         provider.setPasswordEncoder(passwordEncoder)
         provider.setUserDetailsService(userDetailsService)
@@ -114,17 +106,17 @@ class SecurityConfig(
 
     @Bean
     fun jwtAuthenticationProvider(): JwtAuthenticationProvider {
-        return JwtAuthenticationProvider(jwtDecoder())
+        return JwtAuthenticationProvider(jwtDecoder(), userDetailsService)
     }
 
     @Bean
     fun jwtDecoder(): JwtDecoder {
-        return NimbusJwtDecoder.withPublicKey(key).build()
+        return NimbusJwtDecoder.withPublicKey(rsaPublicKey).build()
     }
 
     @Bean
     fun jwtEncoder(): JwtEncoder {
-        val jwk: JWK = RSAKey.Builder(key).privateKey(priv).build()
+        val jwk: JWK = RSAKey.Builder(rsaPublicKey).privateKey(rsaPrivateKey).build()
         val jwks: JWKSource<SecurityContext> = ImmutableJWKSet(JWKSet(jwk))
         return NimbusJwtEncoder(jwks)
     }

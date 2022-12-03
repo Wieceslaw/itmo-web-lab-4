@@ -4,7 +4,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import ru.ifmo.se.lab4.domain.model.User
 
-class UserPrincipal(private val user: User): UserDetails {
+class UserPrincipal(val user: User): UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf()
     }

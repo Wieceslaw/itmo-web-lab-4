@@ -6,7 +6,7 @@ interface UserRepository {
     fun saveUser(user: User): User
     fun findUserById(id: Long): User?
     fun findUserByUsername(username: String): User?
-    fun updateUserByUsername(user: User, username: String): User?
+    fun updateUser(user: User): User?
     fun deleteUserById(id: Long)
     fun deleteUser(user: User)
 }

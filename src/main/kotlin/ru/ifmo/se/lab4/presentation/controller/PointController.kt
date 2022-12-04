@@ -1,5 +1,8 @@
 package ru.ifmo.se.lab4.presentation.controller
 
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -48,20 +51,20 @@ class PointController(
     }
 
     @GetMapping
-    fun getAll(authentication: JwtTokenAuthentication):
-            ResponseEntity<ResponseScheme<List<PointResponseScheme>>>
+    fun findPointsWithPagination(
+        authentication: JwtTokenAuthentication,
+        @PageableDefault(page = 0, size = 5, sort = ["datetime"], direction = Sort.Direction.DESC)
+        pageable: Pageable
+    ): ResponseEntity<ResponseScheme<List<PointResponseScheme>>>
     {
-        val user = authentication.user
-
         return ResponseEntity(
             ResponseScheme(
-                "Successfully got all points",
+                "Successfully found points",
                 ResponseStatus.SUCCESS,
-                user.let {
-                    pointService.getAllPoints(it).map {
-                            point -> point.toPointResponseScheme()
-                    }
-                }
+                pointService.findPointsWithPagination(
+                    authentication.user,
+                    pageable,
+                ).map { it.toPointResponseScheme() }
             ),
             HttpStatus.OK
         )

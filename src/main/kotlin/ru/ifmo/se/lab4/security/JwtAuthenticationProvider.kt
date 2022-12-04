@@ -32,7 +32,7 @@ class JwtAuthenticationProvider(
         try {
             val id = token.subject.toLong()
             return userDetailsService.loadUserById(id)
-        } catch (numberFormatException: NumberFormatException) {
+        } catch (ex: NumberFormatException) {
             throw JwtAuthenticationException("Token subject is not an id")
         }
     }

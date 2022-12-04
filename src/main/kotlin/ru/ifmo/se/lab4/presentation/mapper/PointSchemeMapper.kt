@@ -16,6 +16,7 @@ fun PointResult.toPointResponseScheme() = PointResponseScheme(
     this.result,
     this.delay,
     this.datetime.toInstant(ZoneOffset.UTC).toEpochMilli(),
+    this.datetime.toString(),
     this.x,
     this.y,
     this.r,

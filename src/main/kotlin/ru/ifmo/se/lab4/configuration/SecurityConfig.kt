@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
-import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -21,9 +20,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
 import org.springframework.security.web.SecurityFilterChain
+import ru.ifmo.se.lab4.security.CustomAuthenticationEntryPoint
 import ru.ifmo.se.lab4.security.CustomUserDetailsService
 import ru.ifmo.se.lab4.security.JwtAuthenticationDsl
-import ru.ifmo.se.lab4.security.CustomAuthenticationEntryPoint
 import ru.ifmo.se.lab4.security.JwtAuthenticationProvider
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey

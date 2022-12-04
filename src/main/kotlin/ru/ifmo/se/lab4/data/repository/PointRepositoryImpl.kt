@@ -1,10 +1,12 @@
 package ru.ifmo.se.lab4.data.repository
 
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import ru.ifmo.se.lab4.data.mapper.toPointEntity
 import ru.ifmo.se.lab4.data.mapper.toPointResult
 import ru.ifmo.se.lab4.data.repository.jpa.PointJpaRepository
+import ru.ifmo.se.lab4.data.repository.jpa.PointPagingRepository
 import ru.ifmo.se.lab4.data.repository.jpa.UserJpaRepository
 import ru.ifmo.se.lab4.domain.model.PointBuilder
 import ru.ifmo.se.lab4.domain.model.PointResult
@@ -15,7 +17,8 @@ import ru.ifmo.se.lab4.util.exceptions.UserNotFoundException
 @Component
 class PointRepositoryImpl(
     private val pointJpaRepository: PointJpaRepository,
-    private val userJpaRepository: UserJpaRepository
+    private val userJpaRepository: UserJpaRepository,
+    private val pointPagingRepository: PointPagingRepository,
 ): PointRepository
 {
     @Transactional
@@ -32,6 +35,11 @@ class PointRepositoryImpl(
         val userEntity = userJpaRepository.findByUsername(user.username) ?:
             throw UserNotFoundException(user.username)
         return userEntity.points.map { it.toPointResult()!! }
+    }
+
+    override fun findAllPaginatedPointsByUser(user: User, pageable: Pageable): List<PointResult> {
+        return pointPagingRepository.findPointEntityByUserUsername(user.username, pageable)
+            .map { it.toPointResult()!! }
     }
 
     @Transactional

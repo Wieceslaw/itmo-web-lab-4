@@ -21,6 +21,7 @@ fun PointBuilder.toPointEntity(userJpaRepository: UserJpaRepository) =
 
 fun PointEntity.toPointResult() = this.delay?.let {
     PointResult(
+        this.id!!,
         this.user.toUser(),
         this.result,
         it,

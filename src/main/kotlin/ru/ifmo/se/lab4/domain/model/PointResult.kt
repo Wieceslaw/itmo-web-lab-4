@@ -3,6 +3,7 @@ package ru.ifmo.se.lab4.domain.model
 import java.time.LocalDateTime
 
 class PointResult(
+    val id: Long,
     val user: User,
     val result: Boolean,
     val delay: Long,

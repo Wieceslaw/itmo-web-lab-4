@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.ifmo.se.lab4.domain.service.UserService
+import ru.ifmo.se.lab4.presentation.mapper.toBearerTokenResponseScheme
 import ru.ifmo.se.lab4.presentation.mapper.toResponseScheme
 import ru.ifmo.se.lab4.presentation.mapper.toUser
 import ru.ifmo.se.lab4.presentation.scheme.ResponseScheme
@@ -46,13 +47,14 @@ class AuthController(
             ResponseEntity<ResponseScheme<BearerTokenResponseScheme>>
     {
         // todo: add expiration time
+        // todo: change principal to plain user
         return ResponseEntity(
             ResponseScheme(
                 "Successful login",
                 ResponseStatus.SUCCESS,
-                BearerTokenResponseScheme(
-                    tokenGenerator.generateBearerToken(authentication.principal as UserPrincipal)
-                )
+                tokenGenerator
+                    .generateBearerToken(authentication.principal as UserPrincipal)
+                    .toBearerTokenResponseScheme()
             ),
             HttpStatus.OK
         )

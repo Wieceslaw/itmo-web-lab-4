@@ -41,7 +41,7 @@ class SecurityConfig(
     @Order(1)
     fun registerFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .antMatcher("/auth/register")
+            .antMatcher("/api/auth/register")
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
@@ -56,7 +56,7 @@ class SecurityConfig(
                          customAuthenticationEntryPoint: CustomAuthenticationEntryPoint,
                          ): SecurityFilterChain {
         http
-            .antMatcher("/auth/login")
+            .antMatcher("/api/auth/login")
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()

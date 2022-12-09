@@ -20,7 +20,7 @@ import ru.ifmo.se.lab4.security.UserPrincipal
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 class AuthController(
     private val tokenGenerator: TokenGenerator,
     private val userService: UserService

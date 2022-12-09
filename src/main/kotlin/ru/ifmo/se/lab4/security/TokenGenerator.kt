@@ -7,30 +7,31 @@ import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
-import ru.ifmo.se.lab4.data.repository.jpa.UserJpaRepository
+import ru.ifmo.se.lab4.domain.service.UserService
 import java.time.Instant
 
 @Service
 class TokenGenerator(
-    @Value("\${token.bearer.expiration}") private val bearerTokenExpiration: Long,
+    @Value("\${token.bearer.expiration}") private val tokenExpiration: Long,
     private val encoder: JwtEncoder,
-    private val userJpaRepository: UserJpaRepository
+    private val userService: UserService,
 )
 {
-    fun generateBearerToken(userPrincipal: UserPrincipal): BearerToken {
-        val userEntity = userJpaRepository.findByUsername(userPrincipal.username) ?:
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, userPrincipal.username)
+    fun generateBearerToken(username: String): BearerToken {
+        val user = userService.findUserByUsername(username) ?:
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, username)
         val now = Instant.now()
         val claims = JwtClaimsSet.builder()
             .issuer("self")
             .issuedAt(now)
-            .expiresAt(now.plusSeconds(bearerTokenExpiration))
-            .subject(userEntity.id.toString())
+            .expiresAt(now.plusSeconds(tokenExpiration))
+            .subject(user.id.toString())
             .build()
+        val token = encoder.encode(JwtEncoderParameters.from(claims)).tokenValue
         return BearerToken(
-            encoder.encode(JwtEncoderParameters.from(claims)).tokenValue,
-            bearerTokenExpiration,
-            now.plusSeconds(bearerTokenExpiration).toEpochMilli() / 1000,
+            token,
+            tokenExpiration,
+            now.plusSeconds(tokenExpiration).toEpochMilli() / 1000,
         )
     }
 }

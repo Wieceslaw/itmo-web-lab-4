@@ -15,30 +15,30 @@ class UserRepositoryImpl(
     private val userJpaRepository: UserJpaRepository
 ): UserRepository
 {
-    override fun createUser(user: UserBuilder): User {
-        return userJpaRepository.save(user.toUserEntity()).toUser()
+    override fun create(userBuilder: UserBuilder): User {
+        return userJpaRepository.save(userBuilder.toUserEntity()).toUser()
     }
 
     override fun existsByUsername(username: String): Boolean {
         return userJpaRepository.existsByUsername(username)
     }
 
-    override fun findUserById(id: Long): User? =
+    override fun findById(id: Long): User? =
         userJpaRepository.findById(id).let { if (it.isPresent) it.get().toUser() else null }
 
-    override fun findUserByUsername(username: String): User? =
+    override fun findByUsername(username: String): User? =
         userJpaRepository.findByUsername(username)?.toUser()
 
-    override fun deleteUser(user: User) {
+    override fun delete(user: User) {
         userJpaRepository.deleteByUsername(user.username)
     }
 
-    override fun deleteUserById(id: Long) {
+    override fun deleteById(id: Long) {
         userJpaRepository.deleteById(id)
     }
 
     @Transactional
-    override fun updateUser(user: User): User? {
+    override fun update(user: User): User? {
         val userEntity = userJpaRepository.findByUsername(user.username)
         return userEntity?.let {
             it.password = user.password

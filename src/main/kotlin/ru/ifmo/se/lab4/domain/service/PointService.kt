@@ -1,12 +1,10 @@
 package ru.ifmo.se.lab4.domain.service
 
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import ru.ifmo.se.lab4.domain.model.Point
-import ru.ifmo.se.lab4.domain.model.PointResult
 import ru.ifmo.se.lab4.domain.model.PointBuilder
+import ru.ifmo.se.lab4.domain.model.PointResult
 import ru.ifmo.se.lab4.domain.model.User
 import ru.ifmo.se.lab4.domain.repository.PointRepository
 
@@ -31,8 +29,6 @@ class PointService(
         return pointRepository.savePoint(pointBuilder)
     }
 
-    fun getAllPoints(user: User): List<PointResult> = pointRepository.findAllPointsByUser(user)
-
     fun findPointsWithPagination(user: User, pageable: Pageable): List<PointResult> {
         return pointRepository.findAllPaginatedPointsByUser(
             user,
@@ -40,5 +36,7 @@ class PointService(
         )
     }
 
-    fun deleteAllPoints(user: User) { pointRepository.deleteAllPointsByUser(user) }
+    fun deleteAllPoints(user: User) {
+        pointRepository.deleteAllPointsByUser(user)
+    }
 }

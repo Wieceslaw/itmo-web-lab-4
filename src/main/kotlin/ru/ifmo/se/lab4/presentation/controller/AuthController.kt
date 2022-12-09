@@ -45,13 +45,12 @@ class AuthController(
     fun login(authentication: Authentication):
             ResponseEntity<ResponseScheme<BearerTokenResponseScheme>>
     {
-        // todo: change principal to plain user
         return ResponseEntity(
             ResponseScheme(
                 "Successful login",
                 ResponseStatus.SUCCESS,
                 tokenGenerator
-                    .generateBearerToken(authentication.principal as UserPrincipal)
+                    .generateBearerToken(authentication.name)
                     .toBearerTokenResponseScheme()
             ),
             HttpStatus.OK

@@ -7,7 +7,6 @@ import org.springframework.web.server.ResponseStatusException
 import ru.ifmo.se.lab4.domain.model.User
 import ru.ifmo.se.lab4.domain.model.UserBuilder
 import ru.ifmo.se.lab4.domain.repository.UserRepository
-import ru.ifmo.se.lab4.util.exceptions.UserNotFoundException
 
 @Service
 class UserService(
@@ -19,6 +18,10 @@ class UserService(
         if (userRepository.existsByUsername(userBuilder.username))
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already in use")
         userBuilder.password = passwordEncoder.encode(userBuilder.password)
-        return userRepository.createUser(userBuilder)
+        return userRepository.create(userBuilder)
+    }
+
+    fun findUserByUsername(username: String): User? {
+        return userRepository.findByUsername(username)
     }
 }

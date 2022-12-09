@@ -4,11 +4,11 @@ import ru.ifmo.se.lab4.domain.model.User
 import ru.ifmo.se.lab4.domain.model.UserBuilder
 
 interface UserRepository {
-    fun createUser(user: UserBuilder): User
+    fun create(user: UserBuilder): User
     fun existsByUsername(username: String): Boolean
-    fun findUserById(id: Long): User?
-    fun findUserByUsername(username: String): User?
-    fun updateUser(user: User): User?
-    fun deleteUserById(id: Long)
-    fun deleteUser(user: User)
+    fun findById(id: Long): User?
+    fun findByUsername(username: String): User?
+    fun update(user: User): User?
+    fun deleteById(id: Long)
+    fun delete(user: User)
 }

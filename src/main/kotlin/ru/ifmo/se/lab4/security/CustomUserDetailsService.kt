@@ -14,13 +14,13 @@ class CustomUserDetailsService(
 {
     override fun loadUserByUsername(username: String): UserDetails {
 
-        val user: User = userRepository.findUserByUsername(username) ?:
+        val user: User = userRepository.findByUsername(username) ?:
             throw UserNotFoundException(username)
         return UserPrincipal(user)
     }
 
     fun loadUserById(id: Long): UserDetails {
-        val user: User = userRepository.findUserById(id) ?:
+        val user: User = userRepository.findById(id) ?:
             throw UserNotFoundException(id)
         return UserPrincipal(user)
     }

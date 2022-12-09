@@ -6,6 +6,7 @@ import ru.ifmo.se.lab4.data.mapper.toUser
 import ru.ifmo.se.lab4.data.mapper.toUserEntity
 import ru.ifmo.se.lab4.data.repository.jpa.UserJpaRepository
 import ru.ifmo.se.lab4.domain.model.User
+import ru.ifmo.se.lab4.domain.model.UserBuilder
 import ru.ifmo.se.lab4.domain.repository.UserRepository
 
 
@@ -14,8 +15,13 @@ class UserRepositoryImpl(
     private val userJpaRepository: UserJpaRepository
 ): UserRepository
 {
-    override fun saveUser(user: User): User =
-        user.also { userJpaRepository.save(it.toUserEntity()) }
+    override fun createUser(user: UserBuilder): User {
+        return userJpaRepository.save(user.toUserEntity()).toUser()
+    }
+
+    override fun existsByUsername(username: String): Boolean {
+        return userJpaRepository.existsByUsername(username)
+    }
 
     override fun findUserById(id: Long): User? =
         userJpaRepository.findById(id).let { if (it.isPresent) it.get().toUser() else null }

@@ -8,4 +8,5 @@ import ru.ifmo.se.lab4.data.entity.UserEntity
 interface UserJpaRepository: JpaRepository<UserEntity, Long> {
     fun findByUsername(username: String): UserEntity?
     fun deleteByUsername(username: String)
+    fun existsByUsername(username: String): Boolean
 }

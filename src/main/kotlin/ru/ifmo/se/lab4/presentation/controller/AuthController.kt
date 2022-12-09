@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 import ru.ifmo.se.lab4.domain.service.UserService
 import ru.ifmo.se.lab4.presentation.mapper.toBearerTokenResponseScheme
 import ru.ifmo.se.lab4.presentation.mapper.toResponseScheme
-import ru.ifmo.se.lab4.presentation.mapper.toUser
+import ru.ifmo.se.lab4.presentation.mapper.toUserBuilder
 import ru.ifmo.se.lab4.presentation.scheme.ResponseScheme
 import ru.ifmo.se.lab4.presentation.scheme.ResponseStatus
 import ru.ifmo.se.lab4.presentation.scheme.auth.BearerTokenResponseScheme
@@ -30,8 +30,7 @@ class AuthController(
     fun register(@RequestBody registration: RegistrationRequestScheme):
             ResponseEntity<ResponseScheme<UserResponseScheme>>
     {
-        val user = registration.toUser()
-        userService.createUser(user)
+        val user = userService.createUser(registration.toUserBuilder())
         return ResponseEntity(
             ResponseScheme(
                 "Successful registration",
@@ -46,7 +45,6 @@ class AuthController(
     fun login(authentication: Authentication):
             ResponseEntity<ResponseScheme<BearerTokenResponseScheme>>
     {
-        // todo: add expiration time
         // todo: change principal to plain user
         return ResponseEntity(
             ResponseScheme(

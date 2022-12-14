@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -63,6 +64,11 @@ class SecurityConfig(
 
             .httpBasic().authenticationEntryPoint(customAuthenticationEntryPoint)
             .and()
+
+            .authorizeRequests()
+            .antMatchers(HttpMethod.OPTIONS).permitAll()
+            .and()
+
             .authorizeRequests().anyRequest().authenticated()
         return http.build()
     }
@@ -78,6 +84,10 @@ class SecurityConfig(
             .antMatcher("/api/**")
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+
+            .authorizeRequests()
+            .antMatchers(HttpMethod.OPTIONS).permitAll()
             .and()
 
             .apply(jwtAuthDsl)

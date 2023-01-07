@@ -8,5 +8,6 @@ data class ResponseScheme<T>(
 
 enum class ResponseStatus {
     SUCCESS,
-    ERROR
+    ERROR,
+    AUTH_ERROR
 }

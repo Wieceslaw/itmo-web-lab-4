@@ -37,6 +37,12 @@ class PointRepositoryImpl(
         return userEntity.points.map { it.toPointResult()!! }
     }
 
+    override fun countPointsByUser(user: User): Long {
+        val userEntity = userJpaRepository.findByUsername(user.username) ?:
+            throw UserNotFoundException(user.username)
+        return pointJpaRepository.countByUser(userEntity)
+    }
+
     override fun findAllPaginatedPointsByUser(user: User, pageable: Pageable): List<PointResult> {
         return pointPagingRepository.findPointEntityByUserUsername(user.username, pageable)
             .map { it.toPointResult()!! }

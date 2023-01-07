@@ -9,6 +9,7 @@ interface PointRepository {
     fun savePoint(pointBuilder: PointBuilder): PointResult?
     fun findPointById(id: Long): PointResult?
     fun findAllPointsByUser(user: User): List<PointResult>
+    fun countPointsByUser(user: User): Long
     fun deletePointById(id: Long)
     fun deleteAllPointsByUser(user: User)
     fun findAllPaginatedPointsByUser(user: User, pageable: Pageable): List<PointResult>

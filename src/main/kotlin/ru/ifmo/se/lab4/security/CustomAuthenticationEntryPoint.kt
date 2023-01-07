@@ -22,7 +22,7 @@ class CustomAuthenticationEntryPoint: AuthenticationEntryPoint {
         val objectMapper = ObjectMapper()
         val errorResponse = ResponseScheme<Nothing>(
             "Unauthorized: ${authException.message}",
-            ResponseStatus.ERROR,
+            ResponseStatus.AUTH_ERROR,
         )
         objectMapper.writeValue(response.outputStream, errorResponse)
     }

@@ -17,7 +17,7 @@ class PointService(
         return if (p.x >= 0 && p.y >= 0) {
             p.y <= ((-0.5 * p.x) + (0.5 * p.r))
         } else if (p.x < 0 && p.y >= 0) {
-            (p.x * p.x) + (p.y * p.y) <= (p.r * p.r)
+            (p.x * p.x) + (p.y * p.y) <= (p.r / 2 * p.r / 2)
         } else if (p.x < 0 && p.y < 0) {
             false
         } else {
@@ -34,6 +34,10 @@ class PointService(
             user,
             pageable,
         )
+    }
+
+    fun pointsCount(user: User): Long {
+        return pointRepository.countPointsByUser(user)
     }
 
     fun deleteAllPoints(user: User) {

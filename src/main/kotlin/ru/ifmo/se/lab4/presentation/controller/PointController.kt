@@ -50,6 +50,21 @@ class PointController(
         )
     }
 
+    @GetMapping("/count")
+    fun getPointsCount(
+        authentication: JwtTokenAuthentication
+    ): ResponseEntity<ResponseScheme<Long>>
+    {
+        return ResponseEntity(
+            ResponseScheme(
+                "Successfully found points count",
+                ResponseStatus.SUCCESS,
+                pointService.pointsCount(authentication.user)
+            ),
+            HttpStatus.OK
+        )
+    }
+
     @GetMapping
     fun findPointsWithPagination(
         authentication: JwtTokenAuthentication,

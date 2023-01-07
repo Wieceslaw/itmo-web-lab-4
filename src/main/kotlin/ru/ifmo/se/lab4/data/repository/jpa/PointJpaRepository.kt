@@ -8,4 +8,5 @@ import ru.ifmo.se.lab4.data.entity.UserEntity
 @Repository
 interface PointJpaRepository: JpaRepository<PointEntity, Long> {
     fun deleteAllByUser(userEntity: UserEntity)
+    fun countByUser(userEntity: UserEntity): Long
 }

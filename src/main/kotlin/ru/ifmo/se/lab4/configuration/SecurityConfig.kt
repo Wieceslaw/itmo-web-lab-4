@@ -47,6 +47,9 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
 
+            .cors()
+            .and()
+
             .authorizeRequests().anyRequest().permitAll()
         return http.build()
     }
@@ -62,11 +65,10 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
 
-            .httpBasic().authenticationEntryPoint(customAuthenticationEntryPoint)
+            .cors()
             .and()
 
-            .authorizeRequests()
-            .antMatchers(HttpMethod.OPTIONS).permitAll()
+            .httpBasic().authenticationEntryPoint(customAuthenticationEntryPoint)
             .and()
 
             .authorizeRequests().anyRequest().authenticated()
@@ -86,8 +88,7 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
 
-            .authorizeRequests()
-            .antMatchers(HttpMethod.OPTIONS).permitAll()
+            .cors()
             .and()
 
             .apply(jwtAuthDsl)

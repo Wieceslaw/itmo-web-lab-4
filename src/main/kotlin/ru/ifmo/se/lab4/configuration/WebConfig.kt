@@ -13,5 +13,6 @@ class WebConfig: WebMvcConfigurer {
             .addMapping("/**")
             .allowedOrigins("http://localhost:3000")
             .allowedMethods("*")
+            .allowCredentials(true)
     }
 }

@@ -12,9 +12,11 @@ spring:
         hbm2ddl:
           auto: update
   datasource:
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/postgres
+    username: s336704
+    password: 2mcymbRttDTo9PIf
+    url: jdbc:postgresql://pg:5432/studs
+server:
+  port : 34101
 
 security:
   basic:

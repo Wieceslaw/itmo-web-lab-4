@@ -1,0 +1,30 @@
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: update
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+server:
+  port : 8081
+
+security:
+  basic:
+    enabled: false
+
+jwt:
+  private.key: classpath:app.key
+  public.key: classpath:app.pub
+
+token:
+  bearer.expiration: 86400 # 24 hours

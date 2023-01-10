@@ -10,12 +10,9 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
-import org.springframework.http.HttpMethod
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
@@ -34,20 +31,15 @@ import java.security.interfaces.RSAPublicKey
 class SecurityConfig(
     @Value("\${jwt.public.key}") private val rsaPublicKey: RSAPublicKey,
     @Value("\${jwt.private.key}") private val rsaPrivateKey: RSAPrivateKey,
-    private val userDetailsService: CustomUserDetailsService,
-    private val passwordEncoder: PasswordEncoder
-)
-{
+    private val userDetailsService: CustomUserDetailsService
+) {
     @Bean
     @Order(1)
     fun registerFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .antMatcher("/api/auth/register")
+            .antMatcher("/api/auth/**")
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-
-            .cors()
             .and()
 
             .authorizeRequests().anyRequest().permitAll()
@@ -56,39 +48,16 @@ class SecurityConfig(
 
     @Bean
     @Order(2)
-    fun loginFilterChain(http: HttpSecurity,
-                         customAuthenticationEntryPoint: CustomAuthenticationEntryPoint,
-                         ): SecurityFilterChain {
-        http
-            .antMatcher("/api/auth/login")
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-
-            .cors()
-            .and()
-
-            .httpBasic().authenticationEntryPoint(customAuthenticationEntryPoint)
-            .and()
-
-            .authorizeRequests().anyRequest().authenticated()
-        return http.build()
-    }
-
-    @Bean
-    @Order(3)
-    fun apiFilterChain(http: HttpSecurity,
-                       jwtAuthDsl: JwtAuthenticationDsl,
-                       jwtAuthenticationProvider: JwtAuthenticationProvider,
-                       customAuthenticationEntryPoint: CustomAuthenticationEntryPoint,
-                       ): SecurityFilterChain {
+    fun apiFilterChain(
+        http: HttpSecurity,
+        jwtAuthDsl: JwtAuthenticationDsl,
+        jwtAuthenticationProvider: JwtAuthenticationProvider,
+        customAuthenticationEntryPoint: CustomAuthenticationEntryPoint,
+    ): SecurityFilterChain {
         http
             .antMatcher("/api/**")
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-
-            .cors()
             .and()
 
             .apply(jwtAuthDsl)
@@ -104,14 +73,6 @@ class SecurityConfig(
     @Bean
     fun jwtAuthenticationEntryPoint(): CustomAuthenticationEntryPoint {
         return CustomAuthenticationEntryPoint()
-    }
-
-    @Bean
-    fun daoAuthenticationProvider(): DaoAuthenticationProvider {
-        val provider = DaoAuthenticationProvider()
-        provider.setPasswordEncoder(passwordEncoder)
-        provider.setUserDetailsService(userDetailsService)
-        return provider
     }
 
     @Bean

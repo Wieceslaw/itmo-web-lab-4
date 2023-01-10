@@ -1,6 +1,5 @@
 package ru.ifmo.se.lab4.security
 
-import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.AuthenticationException

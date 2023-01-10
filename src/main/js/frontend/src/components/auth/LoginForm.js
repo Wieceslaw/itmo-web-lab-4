@@ -33,11 +33,7 @@ export function LoginForm() {
             dispatch(push("/"))
         } catch (err) {
             if (err.data && err.data.status) {
-                if (err.data.status == "AUTH_ERROR") {
-                    setErrorMessage("Incorrect username or password")
-                } else {
-                    setErrorMessage(err.data.message)
-                }
+                setErrorMessage(err.data.message)
             } else {
                 setErrorMessage("Unexpected error occurred!")
             }

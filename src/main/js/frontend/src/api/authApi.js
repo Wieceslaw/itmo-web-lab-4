@@ -1,25 +1,22 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
-import {encode} from "js-base64"
 
     export const authApi = createApi({
     reducerPath: "api/auth",
     baseQuery: fetchBaseQuery({baseUrl: "http://localhost:8080/api/auth"}),
     endpoints: (build) => ({
         register: build.mutation({
-            query: ({username, password}) => ({
+            query: (credentials) => ({
                 url: "/register",
                 method: "POST",
-                body: {username, password}
+                body: credentials
             }),
             transformResponse: (response) => response.data,
         }),
         login: build.mutation({
-            query: ({username, password}) => ({
+            query: (credentials) => ({
                 url: "/login",
                 method: "POST",
-                headers: {
-                    Authorization: "Basic " + encode(username + ":" + password),
-                },
+                body: credentials
             }),
             transformResponse: (response) => response.data,
         })

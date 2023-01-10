@@ -14,7 +14,7 @@ class AppConfig {
     }
 
     @Bean
-    fun requestLoggingFilter(): CommonsRequestLoggingFilter? {
+    fun requestLoggingFilter(): CommonsRequestLoggingFilter {
         val loggingFilter = CommonsRequestLoggingFilter()
         loggingFilter.setIncludeClientInfo(true)
         loggingFilter.setIncludeQueryString(true)

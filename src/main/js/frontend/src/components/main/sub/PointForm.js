@@ -5,12 +5,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {resetForm, setValue} from "../../../redux/form/formSlice";
 import {selectFormData} from "../../../redux/form/formSelectors";
 import {IntTextInput} from "../../util/IntTextInput";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {AlertBar} from "../../util/AlertBar";
 
 export function PointForm() {
     const dispatch = useDispatch()
-    const [postHit, {isError}] = usePostHitMutation()
+    const [postHit] = usePostHitMutation()
     const formData = useSelector(selectFormData)
     const [validated, setValidated] = useState(false)
     const [showErrorMessage, setShowErrorMessage] = useState(false)

@@ -1,4 +1,4 @@
-import {Placeholder, Spinner, Table} from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import {useFetchAllQuery} from "../../../api/pointsApi";
 import {useSelector} from "react-redux";
 import {selectPage, selectSize} from "../../../redux/points/pointsSelectors";

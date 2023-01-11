@@ -1,10 +1,10 @@
 package ru.ifmo.se.lab4.security
 
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 import ru.ifmo.se.lab4.domain.model.User
 
-@Service
+@Component
 class UserSecurityService(
     private val passwordEncoder: PasswordEncoder
 )

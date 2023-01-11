@@ -18,7 +18,7 @@ export function TableControl() {
     }
 
     return (
-        <div className="d-flex flex-row justify-content-between flex-wrap gap-4 mb-2">
+        <div className="d-flex flex-row justify-content-between flex-wrap gap-2 mb-2">
             <Paginator className="m-0" betweenNumber={3} />
             <Form.Select
                 style={{width: "fit-content"}}

@@ -25,14 +25,14 @@ import ru.ifmo.se.lab4.security.JwtAuthenticationProvider
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 
-
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
     @Value("\${jwt.public.key}") private val rsaPublicKey: RSAPublicKey,
     @Value("\${jwt.private.key}") private val rsaPrivateKey: RSAPrivateKey,
     private val userDetailsService: CustomUserDetailsService
-) {
+)
+{
     @Bean
     @Order(1)
     fun registerFilterChain(http: HttpSecurity): SecurityFilterChain {

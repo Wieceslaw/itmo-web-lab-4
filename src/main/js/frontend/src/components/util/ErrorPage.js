@@ -1,7 +1,7 @@
-import {Button, Col, Row} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
-export function ErrorPage({}) {
+export function ErrorPage() {
     return (
         <div className="d-flex align-items-center justify-content-center vh-100">
             <div className="text-center">

@@ -34,20 +34,6 @@ class SecurityConfig(
 )
 {
     @Bean
-    @Order(1)
-    fun registerFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http
-            .antMatcher("/api/auth/**")
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-
-            .authorizeRequests().anyRequest().permitAll()
-        return http.build()
-    }
-
-    @Bean
-    @Order(2)
     fun apiFilterChain(
         http: HttpSecurity,
         jwtAuthDsl: JwtAuthenticationDsl,
@@ -60,12 +46,14 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
 
+            .authorizeHttpRequests()
+            .antMatchers("/api/auth/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+
             .apply(jwtAuthDsl)
             .and()
             .authenticationProvider(jwtAuthenticationProvider)
-            .authorizeRequests().anyRequest().authenticated()
-
-            .and()
             .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
         return http.build()
     }

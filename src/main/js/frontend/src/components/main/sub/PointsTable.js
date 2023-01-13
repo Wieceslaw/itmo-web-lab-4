@@ -32,10 +32,10 @@ export function PointsTable() {
     }
 
     return (
-        <div className="text-center table-responsive border border-1 rounded p-1 overflow-auto"
-             style={{maxHeight: 662}}>
+        <div className="text-center table-responsive border border-1 rounded overflow-auto"
+             style={{maxHeight: 662, }}>
             <Table striped borderless hover className="m-0">
-                <thead>
+                <thead style={{position: "sticky", top: "0", backgroundColor: "white"}}>
                     <tr>
                         <th>Date & time</th>
                         <th>Delay</th>

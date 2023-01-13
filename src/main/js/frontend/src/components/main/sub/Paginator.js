@@ -5,13 +5,13 @@ import {decPage, incPage, setPage} from "../../../redux/points/pointsSlice";
 import {useCountAllQuery} from "../../../api/pointsApi";
 import {LoadError} from "../../util/LoadError";
 
-export function Paginator({betweenNumber, className}) {
+export function Paginator({maxBetweenNumber, className}) {
     const dispatch = useDispatch()
     const page = useSelector(selectPage)
     const size = useSelector(selectSize)
     const {data, isLoading, isError} = useCountAllQuery()
     const pagesNumber = Math.ceil(data / size) - 1
-    betweenNumber = Math.min(pagesNumber + 1, betweenNumber)
+    const betweenNumber = Math.min(pagesNumber + 1, maxBetweenNumber)
 
     const handleFirst = () => dispatch(setPage(0))
     const handleLast = () => dispatch(setPage(pagesNumber))

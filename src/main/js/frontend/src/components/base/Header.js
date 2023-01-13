@@ -6,7 +6,7 @@ function Header() {
         //  ФИО студента, номер группы и номер варианта
         // Lebedev Wieceslaw P32312 #1257
         <Navbar bg="light" variant="light" className="d-flex flex-row justify-content-center flex-wrap">
-            <Navbar.Brand className="" href="/">SE.ITMO</Navbar.Brand>
+            <Navbar.Brand className="m-1" href="/">SE.ITMO</Navbar.Brand>
             <div className="d-flex flex-row w-75 justify-content-evenly flex-wrap">
                 <div className="navbar-text">Lebedev Wieceslaw</div>
                 <div className="navbar-text">P32312</div>

@@ -1,5 +1,6 @@
 package ru.ifmo.se.lab4.presentation.util
 
+import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.ifmo.se.lab4.presentation.scheme.ResponseScheme
 import ru.ifmo.se.lab4.presentation.scheme.ResponseStatus
 import ru.ifmo.se.lab4.util.exceptions.UserNotFoundException
+
 
 @ControllerAdvice
 class ResponseExceptionHandler: ResponseEntityExceptionHandler() {

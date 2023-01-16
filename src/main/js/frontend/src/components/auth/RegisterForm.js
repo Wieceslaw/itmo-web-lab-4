@@ -28,6 +28,11 @@ export function RegisterForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            if (password.length < 6) {
+                setErrorMessage("Password is too short!")
+                setShowErrorMessage(true)
+                return
+            }
             await register({username: username, password: password}).unwrap()
             dispatch(push("/login"))
         } catch (err) {

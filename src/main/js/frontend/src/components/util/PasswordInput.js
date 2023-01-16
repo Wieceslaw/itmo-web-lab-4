@@ -7,6 +7,7 @@ export const PasswordInput = ({onChange, value}) => {
     const toggleShown = () =>  {
         setIsShown(!isShown);
     }
+
     return (
         <InputGroup>
             <Form.Control name="password" type={isShown ? "text" : "password"} required maxLength={20}

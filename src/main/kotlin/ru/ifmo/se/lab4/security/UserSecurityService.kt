@@ -9,7 +9,7 @@ class UserSecurityService(
     private val passwordEncoder: PasswordEncoder
 )
 {
-    fun check_password(user: User, password: String): Boolean {
+    fun checkPassword(user: User, password: String): Boolean {
         return passwordEncoder.matches(password, user.password)
     }
 }

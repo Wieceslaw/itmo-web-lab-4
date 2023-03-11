@@ -41,7 +41,7 @@ class SecurityConfig(
         customAuthenticationEntryPoint: CustomAuthenticationEntryPoint,
     ): SecurityFilterChain {
         http
-            .antMatcher("/api/**/index")
+            .antMatcher("/api/**")
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()

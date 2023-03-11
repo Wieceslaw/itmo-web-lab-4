@@ -2,8 +2,6 @@ package ru.ifmo.se.lab4.presentation.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import ru.ifmo.se.lab4.domain.service.UserService
@@ -48,7 +46,7 @@ class AuthController(
     {
         val user = userService.findUserByUsername(loginData.username) ?:
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad login credentials")
-        if (!userSecurityService.check_password(user, loginData.password)) {
+        if (!userSecurityService.checkPassword(user, loginData.password)) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad login credentials")
         }
         return ResponseEntity(

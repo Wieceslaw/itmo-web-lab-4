@@ -173,7 +173,7 @@ export function Graph({width = 100, height = 100, color = "#ffcc00"}) {
                           y2={state.y2}>
                     </line>
                     {
-                        data.filter(element => element.r === r).map(element => (
+                        data.filter(element => r == element.r).map(element => (
                             <circle key={element.id}
                                     cx={element.x / element.r * 100 + 150}
                                     cy={-element.y / element.r * 100 + 150}

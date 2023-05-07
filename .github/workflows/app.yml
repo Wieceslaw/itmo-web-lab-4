@@ -4,6 +4,7 @@ on:
       - 'pom.xml'
       - '.github/workflows/**'
       - 'src/**'
+      - 'Dockerfile'
 
 jobs:
   build:

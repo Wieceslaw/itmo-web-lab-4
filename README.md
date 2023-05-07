@@ -13,5 +13,3 @@
 - kotlin 1.7
 - maven
 - docker
-
-![image](https://user-images.githubusercontent.com/77832376/236685110-c3be8143-141d-4afa-8fb4-e92cee8bec18.png)

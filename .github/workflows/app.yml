@@ -18,6 +18,3 @@ jobs:
           cache: maven
       - name: Build Jar
         run: mvn package
-
-  push-image:
-

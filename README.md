@@ -21,3 +21,6 @@
 
 ### Main Page
 ![image](https://user-images.githubusercontent.com/77832376/236687599-4d894db9-cf0e-4d24-8f49-459286a82dd7.png)
+
+### Mobile Page
+![localhost_8080_](https://user-images.githubusercontent.com/77832376/236687763-36857dd2-a673-455d-8f55-4591a11cbaf4.png)

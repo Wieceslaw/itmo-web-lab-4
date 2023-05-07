@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import {push} from "@lagunovsky/redux-react-router";
-import {Alert, Button, Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import LoadingButton from "../util/LoadingButton";
 import {useState} from "react";
 import {PasswordInput} from "../util/PasswordInput";
@@ -43,8 +43,8 @@ export function LoginForm() {
 
     return (
         <Form style={{width: 400}}
-            className="m-3 border border-1 shadow-lg rounded p-3"
-            onSubmit={handleSubmit}
+              className="m-3 border border-1 shadow-lg rounded p-3"
+              onSubmit={handleSubmit}
         >
             <AlertBar
                 errorMessage={errorMessage}
@@ -53,16 +53,18 @@ export function LoginForm() {
             />
             <Form.Group className="mb-3">
                 <Form.Label className="text-muted">Username</Form.Label>
-                <Form.Control autoFocus required maxLength={20} type="text" name="username" onChange={onUsernameChanged} />
+                <Form.Control autoFocus required maxLength={20} type="text" name="username"
+                              onChange={onUsernameChanged}/>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label className="text-muted">Password</Form.Label>
-                <PasswordInput onChange={onPasswordChanged} value={password} />
+                <PasswordInput onChange={onPasswordChanged} value={password}/>
             </Form.Group>
             <Form.Group>
                 {isLoading ?
-                    <LoadingButton variant="success" className="w-100" /> :
-                    <Button className="w-100" variant="success" type="submit" disabled={username === "" || password === ""}>Sign in</Button>
+                    <LoadingButton variant="success" className="w-100"/> :
+                    <Button className="w-100" variant="success" type="submit"
+                            disabled={username === "" || password === ""}>Sign in</Button>
                 }
             </Form.Group>
         </Form>

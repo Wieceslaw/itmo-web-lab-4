@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import {push} from "@lagunovsky/redux-react-router";
-import {Alert, Button, Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import LoadingButton from "../util/LoadingButton";
 import {useState} from "react";
 import {PasswordInput} from "../util/PasswordInput";
@@ -15,7 +15,7 @@ export function RegisterForm() {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [showErrorMessage, setShowErrorMessage] = useState(false);
-    const [register, {isLoading}]= useRegisterMutation()
+    const [register, {isLoading}] = useRegisterMutation()
 
     const onUsernameChanged = (e) => {
         setUsername(e.target.value);
@@ -57,16 +57,18 @@ export function RegisterForm() {
             />
             <Form.Group className="mb-3">
                 <Form.Label className="text-muted">Username</Form.Label>
-                <Form.Control autoFocus required maxLength={20} type="text" name="username" onChange={onUsernameChanged} />
+                <Form.Control autoFocus required maxLength={20} type="text" name="username"
+                              onChange={onUsernameChanged}/>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label className="text-muted">Password</Form.Label>
-                <PasswordInput onChange={onPasswordChanged} value={password} />
+                <PasswordInput onChange={onPasswordChanged} value={password}/>
             </Form.Group>
             <Form.Group>
                 {isLoading ?
-                    <LoadingButton className="w-100" variant="success" /> :
-                    <Button className="w-100" variant="success" type="submit" disabled={username === "" || password === ""}>Sign up</Button>
+                    <LoadingButton className="w-100" variant="success"/> :
+                    <Button className="w-100" variant="success" type="submit"
+                            disabled={username === "" || password === ""}>Sign up</Button>
                 }
             </Form.Group>
         </Form>

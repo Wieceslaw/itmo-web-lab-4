@@ -5,12 +5,12 @@ import {Link} from "react-router-dom";
 export function Register() {
     return (
         <div className="vh-100">
-            <Header />
+            <Header/>
             <div className="h-75 mt-3 flex-column container d-flex justify-content-center align-items-center">
                 <div className="h3 text-center">
                     Sign up
                 </div>
-                <RegisterForm />
+                <RegisterForm/>
                 <div className="text-muted text-center mt">
                     Already have an account? <Link to="/login">Sign In</Link>
                 </div>

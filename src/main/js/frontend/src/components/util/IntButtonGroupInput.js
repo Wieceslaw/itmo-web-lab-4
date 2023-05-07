@@ -1,4 +1,4 @@
-import {ButtonGroup, ToggleButton, Form} from "react-bootstrap";
+import {ButtonGroup, Form, ToggleButton} from "react-bootstrap";
 
 function IntButtonGroupInput({validated, name, values, onChange, className, radioValue = null}) {
     return (
@@ -13,8 +13,8 @@ function IntButtonGroupInput({validated, name, values, onChange, className, radi
                             type="radio"
                             name={name}
                             value={n}
-                            checked={radioValue == n}
-                            onChange={(e) => onChange(e) }
+                            checked={radioValue === n}
+                            onChange={(e) => onChange(e)}
                         >
                             {n}
                         </ToggleButton>

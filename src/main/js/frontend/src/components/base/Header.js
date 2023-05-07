@@ -1,10 +1,8 @@
-import {Col, Container, Form, Navbar, NavItem, Row} from "react-bootstrap";
+import {Form, Navbar} from "react-bootstrap";
 import AuthButton from "./sub/AuthButton";
 
 function Header() {
     return (
-        //  ФИО студента, номер группы и номер варианта
-        // Lebedev Wieceslaw P32312 #1257
         <Navbar bg="light" variant="light" className="d-flex flex-row justify-content-center flex-wrap">
             <Navbar.Brand className="m-1" href="/">SE.ITMO</Navbar.Brand>
             <div className="d-flex flex-row w-75 justify-content-evenly flex-wrap">
@@ -13,7 +11,7 @@ function Header() {
                 <div className="navbar-text">#1257</div>
             </div>
             <Form inline="true" className="">
-                <AuthButton />
+                <AuthButton/>
             </Form>
         </Navbar>
     )

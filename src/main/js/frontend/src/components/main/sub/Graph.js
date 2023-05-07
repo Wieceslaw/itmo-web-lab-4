@@ -4,7 +4,6 @@ import {selectR} from "../../../redux/form/formSelectors";
 import {useFetchAllQuery, usePostHitMutation} from "../../../api/pointsApi";
 import {selectPage, selectSize} from "../../../redux/points/pointsSelectors";
 import {LoadingGraph} from "../../util/LoadingGraph";
-import {Alert} from "react-bootstrap";
 import {LoadError} from "../../util/LoadError";
 import {AlertBar} from "../../util/AlertBar";
 
@@ -41,19 +40,19 @@ export function Graph({width = 100, height = 100, color = "#ffcc00"}) {
         if (r != null) {
             setShowErrorMessage(false)
         }
-    })
+    }, [showErrorMessage])
 
     if (isLoading) {
-        return <LoadingGraph height={height} width={width} />
+        return <LoadingGraph height={height} width={width}/>
     }
     if (isError) {
-        return <LoadError />
+        return <LoadError/>
     }
 
     const rLabels = {
         wn: r ? -r : "-R",
         hn: r ? -(r / 2) : "-R/2",
-        wp: r ? +r: "R",
+        wp: r ? +r : "R",
         hp: r ? r / 2 : "R/2"
     }
 
@@ -126,13 +125,13 @@ export function Graph({width = 100, height = 100, color = "#ffcc00"}) {
                 style={{width, height}}
             >
                 <svg viewBox="0 0 300 300" className="user-select-none graph" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 150 100 A 50 50, 0, 0, 0, 100 150 L 150 150" fill={color} />
-                    <polygon points="150, 150  150, 250  200, 250  200, 150" fill={color} />
-                    <polygon points="150, 150  150, 100  250, 150" fill={color} />
+                    <path d="M 150 100 A 50 50, 0, 0, 0, 100 150 L 150 150" fill={color}/>
+                    <polygon points="150, 150  150, 250  200, 250  200, 150" fill={color}/>
+                    <polygon points="150, 150  150, 100  250, 150" fill={color}/>
 
                     <text className="graph-axle-text" x="285" y="140">x</text>
-                    <line className="graph-axle-line" x1="0" x2="295" y1="150" y2="150" />
-                    <polygon className="graph-axle-arrow" points="299,150 290,155 290,145" />
+                    <line className="graph-axle-line" x1="0" x2="295" y1="150" y2="150"/>
+                    <polygon className="graph-axle-arrow" points="299,150 290,155 290,145"/>
 
                     <text className="graph-axle-text" x="160" y="15">y</text>
                     <line className="graph-axle-line" x1="150" x2="150" y1="5" y2="300"></line>
@@ -174,12 +173,12 @@ export function Graph({width = 100, height = 100, color = "#ffcc00"}) {
                           y2={state.y2}>
                     </line>
                     {
-                        data.filter(element => element.r == r).map(element => (
+                        data.filter(element => element.r === r).map(element => (
                             <circle key={element.id}
-                                cx={element.x / element.r * 100 + 150}
-                                cy={-element.y / element.r * 100 + 150}
-                                r="2"
-                                className={element.result ? 'point-hit' : 'point-miss'}
+                                    cx={element.x / element.r * 100 + 150}
+                                    cy={-element.y / element.r * 100 + 150}
+                                    r="2"
+                                    className={element.result ? 'point-hit' : 'point-miss'}
                             />
                         ))
                     }

@@ -1,4 +1,4 @@
-import {Pagination, Placeholder, Spinner} from "react-bootstrap";
+import {Pagination, Placeholder} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {selectPage, selectSize} from "../../../redux/points/pointsSelectors";
 import {decPage, incPage, setPage} from "../../../redux/points/pointsSlice";
@@ -30,33 +30,33 @@ export function Paginator({maxBetweenNumber, className}) {
     }
 
     if (isLoading) {
-        return <Placeholder xs={6} />
+        return <Placeholder xs={6}/>
     }
     if (isError) {
-        return <LoadError />
+        return <LoadError/>
     }
 
     return (
         <Pagination className={className}>
-            <Pagination.First disabled={page === 0} onClick={handleFirst}  />
-            <Pagination.Prev disabled={page === 0} onClick={handlePrev} />
+            <Pagination.First disabled={page === 0} onClick={handleFirst}/>
+            <Pagination.Prev disabled={page === 0} onClick={handlePrev}/>
 
             {
                 pages.map(pageNumber => (
-                    <Pagination.Item key={pageNumber}
-                        active={pageNumber === page}
-                        onClick={() => {
-                            dispatch(setPage(pageNumber))
-                        }}
-                    >
-                        {pageNumber + 1}
-                    </Pagination.Item>
+                        <Pagination.Item key={pageNumber}
+                                         active={pageNumber === page}
+                                         onClick={() => {
+                                             dispatch(setPage(pageNumber))
+                                         }}
+                        >
+                            {pageNumber + 1}
+                        </Pagination.Item>
                     )
                 )
             }
 
-            <Pagination.Next disabled={page === pagesNumber || pagesNumber === -1} onClick={handleNext} />
-            <Pagination.Last disabled={page === pagesNumber || pagesNumber === -1} onClick={handleLast} />
+            <Pagination.Next disabled={page === pagesNumber || pagesNumber === -1} onClick={handleNext}/>
+            <Pagination.Last disabled={page === pagesNumber || pagesNumber === -1} onClick={handleLast}/>
         </Pagination>
     )
 }

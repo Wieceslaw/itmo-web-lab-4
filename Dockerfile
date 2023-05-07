@@ -1,5 +1,5 @@
 FROM openjdk:17
 
-COPY app.jar app.jar
+COPY target/Lab4-0.0.1-SNAPSHOT.jar app.jar
 
-ENTRYPOINT exec java -jar app.jar
+ENTRYPOINT exec java -jar /app.jar

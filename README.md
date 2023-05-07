@@ -16,5 +16,8 @@
 - Persistence: Postgres
 
 ## Examples
+### Login Page
 ![image](https://user-images.githubusercontent.com/77832376/236686078-58eda7b9-4900-4cc5-98a6-875bb27ff7b7.png)
 
+### Main Page
+![image](https://user-images.githubusercontent.com/77832376/236687599-4d894db9-cf0e-4d24-8f49-459286a82dd7.png)

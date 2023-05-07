@@ -1,4 +1,5 @@
 # Web Programming Assignment
+Avalable on [Docker Hub](https://hub.docker.com/r/wieceslaw/web-lab-4)
 
 ## Prerequisites
 1. Docker, Docker Compose

@@ -1,15 +1,12 @@
-# Lab task for web programming
+# Web Programming Assignment
 
-### Technologies
-- Backend: Spring MVC, Spring Data
-- Frontend: React, Redux, Bootstrap
+## Prerequisites
+1. Docker, Docker Compose
+2. Linux Distro or Windows with WSL
+
+### Stack
+- Backend: Kotlin, Spring Boot
+- Frontend: JavaScript, React, Redux, Bootstrap
 - Persistence: Postgres
-- REST Api
-- Adaptive layout for mobile, tablet and desktop
-- User registration and authorization system
 
-### Requirements
-- jdk 17
-- kotlin 1.7
-- maven
-- docker
+![image](https://user-images.githubusercontent.com/77832376/236686078-58eda7b9-4900-4cc5-98a6-875bb27ff7b7.png)

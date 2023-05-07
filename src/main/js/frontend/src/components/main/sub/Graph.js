@@ -40,7 +40,7 @@ export function Graph({width = 100, height = 100, color = "#ffcc00"}) {
         if (r != null) {
             setShowErrorMessage(false)
         }
-    }, [showErrorMessage])
+    }, [r])
 
     if (isLoading) {
         return <LoadingGraph height={height} width={width}/>

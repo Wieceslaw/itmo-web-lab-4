@@ -1,5 +1,5 @@
 # Web Programming Assignment
-Avalable on [Docker Hub](https://hub.docker.com/r/wieceslaw/web-lab-4)
+Application image is avalable on [Docker Hub](https://hub.docker.com/r/wieceslaw/web-lab-4)
 
 ## Prerequisites
 1. Docker, Docker Compose
@@ -11,10 +11,15 @@ Avalable on [Docker Hub](https://hub.docker.com/r/wieceslaw/web-lab-4)
 3. Run `$ docker-compose up`
 4. Visit `localhost:8080` in browser
 
-## Stack
-- Backend: Kotlin, Spring Boot
-- Frontend: JavaScript, React, Redux, Bootstrap
+## Technologies used
+- Languages: Kotlin 1.7.2 (JDK 17), JavaScript
+- Frameworks & Libraries: 
+  - Backend: Srping (Boot, MVC, Data JPA, Security), Lombok
+  - Frontend: React, Redux, Bootstrap CSS
+- VCS: Git
 - Persistence: Postgres
+- Tools: Maven, Docker, Docker Compose, Linux/Unix
+- CD/CI: GitHub Actions
 
 ## Examples
 ### Login Page

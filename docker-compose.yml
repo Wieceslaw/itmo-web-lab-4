@@ -16,7 +16,7 @@ services:
       - postgres
 
   app:
-    build: ../
+    image: wieceslaw/web-lab-4
     container_name: lab4-app
     ports:
       - "8080:8080"

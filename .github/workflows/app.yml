@@ -23,7 +23,7 @@ jobs:
       - name: Save Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: app.jar
+          name: app-artifact
           path: target/Lab4-0.0.1-SNAPSHOT.jar
 
   push-image:
@@ -35,8 +35,8 @@ jobs:
       - name: Fetch Artifact
         uses: actions/download-artifact@v3
         with:
-          name: app.jar
-          path: target/Lab4-0.0.1-SNAPSHOT.jar
+          name: app-artifact
+          path: app.jar
       - name: See jar file
         run: ls -la target
       - name: Build Image

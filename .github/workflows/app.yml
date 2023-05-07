@@ -9,7 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Files
+        uses: actions/checkout@v3
       - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -28,13 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
+      - name: Checkout Files
+        uses: actions/checkout@v3
       - name: Fetch Artifact
         uses: actions/download-artifact@v3
         with:
           name: app-artifact
           path: app.jar
-      - name: See files
-        run: ls -la
       - name: Build Image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/web-lab-4:latest .
       - name: Login to Docker Hub
